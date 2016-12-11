@@ -1,11 +1,13 @@
 package com.company;
 
+import com.company.com.company.interfaces.Description;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rana_ on 12/10/2016.
@@ -61,7 +63,7 @@ public class PromptingReader {
     }
 
 
-    public EmployeeRecord readEmployee(HashMap<String, EmployeeRecord> roster) throws IOException{
+    public EmployeeRecord readEmployee(Map<String, EmployeeRecord> roster) throws IOException{
         System.out.println("Please enter your employee information");
 
         EmployeeRecord record = new EmployeeRecord();
@@ -96,7 +98,7 @@ public class PromptingReader {
 
     public <T> T selectValue(String prompt, T[] values){
         for (int i=0; i<values.length;i++){
-            System.out.println("(" +i+")" + values[i]);
+            System.out.println("(" +i+")" + getDescription(values[i]));
         }
         int index;
         try {
@@ -111,4 +113,11 @@ public class PromptingReader {
         return null;
     }
 
+    public String getDescription(Object obj) {
+      if(obj instanceof  Description){
+          return ((Description)obj).getDescription();
+      }else{
+          return obj.toString();
+      }
+    }
 }

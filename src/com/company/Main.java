@@ -1,9 +1,16 @@
 package com.company;
 
+import com.company.com.company.commands.DeleteEmployee;
+import com.company.com.company.commands.Exit;
+import com.company.com.company.commands.LogTime;
+import com.company.com.company.commands.Report;
+import com.company.com.company.interfaces.Command;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -14,13 +21,17 @@ public class Main {
 
             PromptingReader prompter = new PromptingReader(bufferedReader);
 
-            HashMap<String, EmployeeRecord> roster = new HashMap<>();
+            Map<String, EmployeeRecord> roster = new HashMap<>();
+            Command[] commands = new Command[]{
+                new LogTime(prompter, roster),
+                new Report(prompter, roster),
+                new DeleteEmployee(prompter, roster),
+                new Exit(),
+            };
 
             while (true) {
-                processEmployee(prompter, roster);
-
-                boolean shouldContinue = prompter.readBoolean("Enter another Employee? ");
-                if (!shouldContinue){
+                Command command = prompter.selectValue("Choose a command: ", commands);
+                if(command.performCommand() == false){
                     break;
                 }
             }
@@ -32,20 +43,6 @@ public class Main {
 	}
 
     private static void processEmployee(PromptingReader prompter, HashMap<String, EmployeeRecord> roster) throws IOException {
-        EmployeeRecord record = prompter.readEmployee(roster);
 
-        int hoursWorked = prompter.readNumber("How many hours did you work today?");
-        float pay = hoursWorked * record.getHourlyRateDollars();
-
-        System.out.println(record.getFullName() + " will be paid " + pay + " dollars today!");
-
-        record.addHoursWorked(hoursWorked);
-        int daysWorked = record.getDaysWorked();
-
-        int totalHoursWorked = record.getTotalHoursWorked();
-        float avgHoursWorked = totalHoursWorked/(float)daysWorked;
-
-        System.out.println("They have worked [" + daysWorked +"] days so far.");
-        System.out.println(" "+totalHoursWorked+ " total hours worked, average: " + avgHoursWorked + " hours / day ");
     }
 }

@@ -4,6 +4,7 @@ import sun.management.snmp.jvmmib.EnumJvmMemPoolCollectThreshdSupport;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by rana_ on 12/10/2016.
@@ -21,7 +22,7 @@ public class EmployeeRecord {
     private Date    dob;
 
     private Job job = Job.PEON;
-    private ArrayList<Integer> hoursWorked = new ArrayList<>();
+    private List<Integer> hoursWorked = new ArrayList<>();
 
 
     private Address address;
