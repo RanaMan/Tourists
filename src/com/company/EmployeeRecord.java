@@ -2,6 +2,7 @@ package com.company;
 
 import sun.management.snmp.jvmmib.EnumJvmMemPoolCollectThreshdSupport;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -18,6 +19,10 @@ public class EmployeeRecord {
     private String  title;
     private int     sin;
     private Date    dob;
+
+    private Job job = Job.PEON;
+    private ArrayList<Integer> hoursWorked = new ArrayList<>();
+
 
     private Address address;
 
@@ -101,7 +106,30 @@ public class EmployeeRecord {
         return this.hourlyRateCents/100.0f;
     }
 
+    public void addHoursWorked(int hoursWorked){
+        this.hoursWorked.add(Integer.valueOf(hoursWorked));
+    }
 
+    public int getDaysWorked(){
+        return this.hoursWorked.size();
+    }
+
+
+    public int getTotalHoursWorked(){
+        int hours = 0;
+        for(Integer i:hoursWorked){
+            hours = hours +i;
+        }
+        return hours;
+    }
+
+    public Job getJob(){
+        return  this.job;
+    }
+
+    public void setJob (Job job){
+        this.job = job;
+    }
     /*
     We have totally abstracted the address from the use of EmployeeRecord
      */
